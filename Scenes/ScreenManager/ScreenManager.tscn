@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bl8ofasb3ho6x"]
+[gd_scene load_steps=4 format=3 uid="uid://bl8ofasb3ho6x"]
 
 [ext_resource type="Script" path="res://Scenes/ScreenManager/ScreenManager.gd" id="1_qq3gw"]
 [ext_resource type="Script" path="res://Scenes/ScreenManager/ScreenWrapper.gd" id="2_ejnrs"]
+[ext_resource type="PackedScene" uid="uid://lgyfy7jq760t" path="res://Scenes/Game/GameContainer.tscn" id="3_3dmr7"]
 
 [node name="ScreenManager" type="Node2D"]
 script = ExtResource("1_qq3gw")
@@ -17,6 +18,8 @@ script = ExtResource("2_ejnrs")
 
 [node name="GameWrapper" type="Node2D" parent="."]
 script = ExtResource("2_ejnrs")
+
+[node name="GameContainer" parent="GameWrapper" instance=ExtResource("3_3dmr7")]
 
 [node name="CreditsWrapper" type="Node2D" parent="."]
 script = ExtResource("2_ejnrs")
