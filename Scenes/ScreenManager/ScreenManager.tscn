@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://bl8ofasb3ho6x"]
+
+[ext_resource type="Script" path="res://Scenes/ScreenManager/ScreenManager.gd" id="1_qq3gw"]
+[ext_resource type="Script" path="res://Scenes/ScreenManager/ScreenWrapper.gd" id="2_ejnrs"]
+
+[node name="ScreenManager" type="Node2D"]
+script = ExtResource("1_qq3gw")
+
+[node name="MainMenuWrapper" type="Node2D" parent="."]
+script = ExtResource("2_ejnrs")
+
+[node name="SettingsWrapper" type="Node2D" parent="."]
+script = ExtResource("2_ejnrs")
+
+[node name="WizardSelect" type="Node2D" parent="."]
+script = ExtResource("2_ejnrs")
+
+[node name="GameWrapper" type="Node2D" parent="."]
+script = ExtResource("2_ejnrs")
+
+[node name="CreditsWrapper" type="Node2D" parent="."]
+script = ExtResource("2_ejnrs")
