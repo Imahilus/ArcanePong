@@ -1,11 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://qc1m1wloleov"]
+[gd_scene load_steps=6 format=3 uid="uid://qc1m1wloleov"]
 
 [ext_resource type="Script" path="res://Scenes/Game/Wizard.gd" id="1_ffral"]
 [ext_resource type="Texture2D" path="res://icon.svg" id="2_llbgg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l0d77"]
+radius = 16.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uk2t0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tiul5"]
+radius = 30.0
 
 [node name="Wizard" type="CharacterBody2D"]
 motion_mode = 1
@@ -20,7 +24,6 @@ scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_llbgg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-scale = Vector2(1.6, 1.6)
 shape = SubResource("CircleShape2D_l0d77")
 
 [node name="GrabArea" type="Area2D" parent="."]
@@ -30,3 +33,11 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GrabArea"]
 scale = Vector2(3.5, 3.5)
 shape = SubResource("CapsuleShape2D_uk2t0")
+
+[node name="CastArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CastArea"]
+scale = Vector2(3.5, 3.5)
+shape = SubResource("CircleShape2D_tiul5")

@@ -5,26 +5,45 @@ enum PLAYER { PLAYER1, PLAYER2 }
 const SPEED:float = 200
 const DRAG_SPEED:float = 120
 
+const PROJECTILE_AIR:PackedScene = preload("res://Scenes/Game/ProjectileAir.tscn")
 
 @export var _playerName:String = "Player1"
 @export var _platform:Area2D
-var _paddle:CharacterBody2D
+@export var _paddle:CharacterBody2D
+var _isGrabbingPaddle:bool = false
 
 
 func _process(_delta):
 	if(Input.is_action_pressed(_playerName + "_Grab")):
-		if(_paddle == null):
+		if(!_isGrabbingPaddle):
 			var bodies:Array[Node2D] = $GrabArea.get_overlapping_bodies()
-			if(bodies.size() > 0):
-				_paddle = bodies[0] as CharacterBody2D
+			_isGrabbingPaddle = bodies.has(_paddle)
 	else:
-		_paddle = null
+		_isGrabbingPaddle = false
+	
+	if(!_isGrabbingPaddle && Input.is_action_just_pressed(_playerName + "_Projectile1")):
+		if($CastArea.get_overlapping_bodies().has(_paddle)):
+			var projectile:CharacterBody2D = PROJECTILE_AIR.instantiate()
+			var halfProjectileWidth:float = projectile.get_node("CollisionShape2D").shape.radius
+			
+			#We're going to fire based on the centerpoint of the paddle
+			var paddleCenterPoint:Vector2 = Vector2(_paddle.position.x + (_paddle.get_node("CollisionShape2D").shape.size.x / 2), _paddle.position.y + (_paddle.get_node("CollisionShape2D").shape.size.y / 2))
+			#Get the angle of the wizard to the paddle
+			var firingAngle:float = position.angle_to_point(paddleCenterPoint)
+			#Make sure we're going to fire from the correct side of the paddle (the projectile should always be on the opposite side of the paddle)
+			var direction:float = (paddleCenterPoint.x - position.x) / abs(paddleCenterPoint.x - position.x)
+			#The firing point always needs to be at least half the width of the projectile out from the paddle to prevent a collision
+			var paddleFiringPoint:Vector2 = Vector2(paddleCenterPoint.x + ( direction * ((_paddle.get_node("CollisionShape2D").shape.size.x / 2) + halfProjectileWidth )), paddleCenterPoint.y)
+			
+			projectile.position = paddleFiringPoint
+			projectile.angle = firingAngle
+			get_parent().add_child(projectile)
 
 
 func _physics_process(_delta):
 	var direction:Vector2 = Input.get_vector(_playerName + "_Left", _playerName + "_Right", _playerName + "_Up", _playerName + "_Down")
 	
-	if(_paddle != null):
+	if(_isGrabbingPaddle):
 		#If a paddle is being dragged; it has to be moved first, or the player can bump into it
 		velocity = direction * DRAG_SPEED
 		_paddle.velocity = direction * DRAG_SPEED
@@ -36,7 +55,7 @@ func _physics_process(_delta):
 		velocity = direction * SPEED
 	
 	move_and_slide()
-		#Restrict the wizard from leaving the platform rectangle
-	position.x = clamp(position.x, _platform.position.x + ($CollisionShape2D.scale.x * 10), _platform.position.x + _platform.get_node("CollisionShape2D").shape.size.x - ($CollisionShape2D.scale.x * 10))
-	position.y = clamp(position.y, _platform.position.y + ($CollisionShape2D.scale.y * 10), _platform.position.y + _platform.get_node("CollisionShape2D").shape.size.y - ($CollisionShape2D.scale.y * 10))
+	#Restrict the wizard from leaving the platform rectangle
+	position.x = clamp(position.x, _platform.position.x + $CollisionShape2D.shape.radius, _platform.position.x + _platform.get_node("CollisionShape2D").shape.size.x - $CollisionShape2D.shape.radius)
+	position.y = clamp(position.y, _platform.position.y + $CollisionShape2D.shape.radius, _platform.position.y + _platform.get_node("CollisionShape2D").shape.size.y - $CollisionShape2D.shape.radius)
 	

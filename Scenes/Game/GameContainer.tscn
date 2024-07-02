@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://lgyfy7jq760t"]
 
-[ext_resource type="Texture2D" uid="uid://brlps1b7y47en" path="res://icon.svg" id="1_r1bhp"]
+[ext_resource type="Texture2D" path="res://icon.svg" id="1_r1bhp"]
 [ext_resource type="PackedScene" uid="uid://qc1m1wloleov" path="res://Scenes/Game/Wizard.tscn" id="2_4mqa4"]
 [ext_resource type="PackedScene" uid="uid://cbdsho7d56kdj" path="res://Scenes/Game/Paddle.tscn" id="3_lh8f8"]
 
@@ -57,9 +57,10 @@ texture = ExtResource("1_r1bhp")
 scale = Vector2(1.6, 1.6)
 shape = SubResource("CircleShape2D_6waks")
 
-[node name="Wizard1" parent="." node_paths=PackedStringArray("_platform") instance=ExtResource("2_4mqa4")]
+[node name="Wizard1" parent="." node_paths=PackedStringArray("_platform", "_paddle") instance=ExtResource("2_4mqa4")]
 position = Vector2(100.5, 286.5)
 _platform = NodePath("../Arena/LeftWizardArea2D")
+_paddle = NodePath("../Paddle")
 
 [node name="Paddle" parent="." instance=ExtResource("3_lh8f8")]
 position = Vector2(150, 188.5)
