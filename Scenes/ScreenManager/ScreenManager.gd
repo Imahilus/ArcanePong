@@ -8,16 +8,16 @@ enum SCREEN { NONE, MAIN_MENU, SETTINGS, WIZARD_SELECT, GAME, CREDITS }
 
 
 var currentScreen:SCREEN = SCREEN.NONE
-var screenToSwitchTo:SCREEN = SCREEN.MAIN_MENU
+var screenToSwitchTo:SCREEN = SCREEN.GAME
 
 
 func _process(_delta):
 	if(screenToSwitchTo != SCREEN.NONE):
 		var currentScreenNode:ScreenWrapper = _get_wrapper_node(currentScreen)
 		var screenNodeToSwitchTo:ScreenWrapper = _get_wrapper_node(screenToSwitchTo)
-		if(screenToSwitchTo != currentScreen && currentScreenNode.get_state_to_switch_to() != ScreenWrapper.STATE.CLOSE):
+		if(currentScreen != SCREEN.NONE && screenToSwitchTo != currentScreen && currentScreenNode.get_state_to_switch_to() != ScreenWrapper.STATE.CLOSE):
 			currentScreenNode.close()
-		elif(screenToSwitchTo != currentScreen && currentScreenNode.get_current_state() == ScreenWrapper.STATE.CLOSE):
+		elif(screenToSwitchTo != currentScreen && (currentScreen == SCREEN.NONE || currentScreenNode.get_current_state() == ScreenWrapper.STATE.CLOSE)):
 			currentScreen = screenToSwitchTo
 			screenToSwitchTo = SCREEN.NONE
 			if(screenNodeToSwitchTo != null):
