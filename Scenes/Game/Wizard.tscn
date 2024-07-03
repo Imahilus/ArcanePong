@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://qc1m1wloleov"]
+[gd_scene load_steps=7 format=3 uid="uid://qc1m1wloleov"]
 
 [ext_resource type="Script" path="res://Scenes/Game/Wizard.gd" id="1_ffral"]
-[ext_resource type="Texture2D" path="res://icon.svg" id="2_llbgg"]
+[ext_resource type="Texture2D" uid="uid://brlps1b7y47en" path="res://icon.svg" id="2_llbgg"]
+[ext_resource type="Script" path="res://Scripts/PhysicsModifications.gd" id="3_n64q3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l0d77"]
 radius = 16.0
@@ -41,3 +42,7 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CastArea"]
 scale = Vector2(3.5, 3.5)
 shape = SubResource("CircleShape2D_tiul5")
+
+[node name="PhysicsModifications" type="Node" parent="."]
+script = ExtResource("3_n64q3")
+drag = 1

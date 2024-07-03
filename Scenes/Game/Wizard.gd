@@ -5,7 +5,8 @@ enum PLAYER { PLAYER1, PLAYER2 }
 const SPEED:float = 200
 const DRAG_SPEED:float = 120
 
-const PROJECTILE_AIR:PackedScene = preload("res://Scenes/Game/ProjectileAir.tscn")
+const PROJECTILE_AIR:PackedScene = preload("res://Scenes/Projectiles/ProjectileAir.tscn")
+const PROJECTILE_FIREBALL:PackedScene = preload("res://Scenes/Projectiles/ProjectileFireball.tscn")
 
 @export var _playerName:String = "Player1"
 @export var _platform:Area2D
@@ -14,16 +15,16 @@ var _isGrabbingPaddle:bool = false
 
 
 func _process(_delta):
-	if(Input.is_action_pressed(_playerName + "_Grab")):
+	if(Input.is_action_just_pressed(_playerName + "_Grab")):
 		if(!_isGrabbingPaddle):
 			var bodies:Array[Node2D] = $GrabArea.get_overlapping_bodies()
 			_isGrabbingPaddle = bodies.has(_paddle)
-	else:
+	elif(!Input.is_action_pressed(_playerName + "_Grab")):
 		_isGrabbingPaddle = false
 	
 	if(!_isGrabbingPaddle && Input.is_action_just_pressed(_playerName + "_Projectile1")):
 		if($CastArea.get_overlapping_bodies().has(_paddle)):
-			var projectile:CharacterBody2D = PROJECTILE_AIR.instantiate()
+			var projectile:CharacterBody2D = PROJECTILE_FIREBALL.instantiate()
 			var halfProjectileWidth:float = projectile.get_node("CollisionShape2D").shape.radius
 			
 			#We're going to fire based on the centerpoint of the paddle
@@ -40,8 +41,12 @@ func _process(_delta):
 			get_parent().add_child(projectile)
 
 
-func _physics_process(_delta):
+func _physics_process(delta):
 	var direction:Vector2 = Input.get_vector(_playerName + "_Left", _playerName + "_Right", _playerName + "_Up", _playerName + "_Down")
+	
+	var bumped:Vector2 = $PhysicsModifications.on_physics_process(delta)
+	if(bumped != Vector2.ZERO):
+		_isGrabbingPaddle = false
 	
 	if(_isGrabbingPaddle):
 		#If a paddle is being dragged; it has to be moved first, or the player can bump into it
@@ -51,8 +56,10 @@ func _physics_process(_delta):
 		#Restrict the paddle from leaving the platform rectangle
 		_paddle.position.x = clamp(_paddle.position.x, _platform.position.x, _platform.position.x + _platform.get_node("CollisionShape2D").shape.size.x - _paddle.get_node("CollisionShape2D").shape.size.x)
 		_paddle.position.y = clamp(_paddle.position.y, _platform.position.y, _platform.position.y + _platform.get_node("CollisionShape2D").shape.size.y - _paddle.get_node("CollisionShape2D").shape.size.y)
+	elif(direction != Vector2.ZERO):
+		velocity = (direction * SPEED) + bumped
 	else:
-		velocity = direction * SPEED
+		velocity = bumped
 	
 	move_and_slide()
 	#Restrict the wizard from leaving the platform rectangle

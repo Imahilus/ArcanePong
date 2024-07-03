@@ -1,0 +1,61 @@
+[gd_scene load_steps=9 format=3 uid="uid://q2clbt4s7a3w"]
+
+[sub_resource type="Curve" id="Curve_w421o"]
+_data = [Vector2(0, 1), 0.0, 1.4, 0, 0, Vector2(0.773333, 0.384615), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_v6wm7"]
+curve = SubResource("Curve_w421o")
+
+[sub_resource type="Gradient" id="Gradient_wk2nm"]
+offsets = PackedFloat32Array(0, 0.155738, 0.385246, 0.680328, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.967122, 0.760985, 0.440242, 1, 0.793399, 0.438701, 0, 1, 0.654902, 0.121569, 0.121569, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_4dwkp"]
+gradient = SubResource("Gradient_wk2nm")
+
+[sub_resource type="Curve" id="Curve_tjk3x"]
+_data = [Vector2(0, 0), 0.0, 1.4, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_im1k8"]
+_data = [Vector2(0, 0), 0.0, 1.4, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_setru"]
+curve_x = SubResource("Curve_tjk3x")
+curve_y = SubResource("Curve_im1k8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_iv7dq"]
+lifetime_randomness = 0.15
+particle_flag_disable_z = true
+particle_flag_damping_as_friction = true
+angle_max = 360.0
+spread = 180.0
+initial_velocity_min = 150.0
+initial_velocity_max = 200.0
+directional_velocity_min = 0.0
+directional_velocity_max = 0.0
+directional_velocity_curve = SubResource("CurveXYZTexture_setru")
+orbit_velocity_min = 0.5
+orbit_velocity_max = 1.0
+radial_velocity_min = -100.0
+radial_velocity_max = 200.0
+gravity = Vector3(0, 0, 0)
+scale_min = 8.0
+scale_max = 14.0
+color = Color(0.971071, 0.663891, 1.15514e-06, 1)
+color_ramp = SubResource("GradientTexture1D_4dwkp")
+alpha_curve = SubResource("CurveTexture_v6wm7")
+hue_variation_max = 0.1
+
+[node name="ProjectileFireballExplosion" type="Node2D"]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 250
+process_material = SubResource("ParticleProcessMaterial_iv7dq")
+lifetime = 0.4
+one_shot = true
+preprocess = 0.1
+explosiveness = 0.65

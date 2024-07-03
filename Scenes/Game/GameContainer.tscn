@@ -1,30 +1,45 @@
-[gd_scene load_steps=6 format=3 uid="uid://lgyfy7jq760t"]
+[gd_scene load_steps=12 format=3 uid="uid://lgyfy7jq760t"]
 
-[ext_resource type="Texture2D" path="res://icon.svg" id="1_r1bhp"]
+[ext_resource type="Texture2D" uid="uid://bbtievkusxq2f" path="res://Resources/Sprites/Arena.png" id="1_fb8xv"]
+[ext_resource type="Texture2D" uid="uid://brlps1b7y47en" path="res://icon.svg" id="1_r1bhp"]
 [ext_resource type="PackedScene" uid="uid://qc1m1wloleov" path="res://Scenes/Game/Wizard.tscn" id="2_4mqa4"]
+[ext_resource type="Script" path="res://Scenes/Game/Ball.gd" id="3_ak0jf"]
 [ext_resource type="PackedScene" uid="uid://cbdsho7d56kdj" path="res://Scenes/Game/Paddle.tscn" id="3_lh8f8"]
+[ext_resource type="Texture2D" uid="uid://d0a3nhh3hrg45" path="res://Resources/Sprites/Rock.png" id="3_ruo30"]
+[ext_resource type="Script" path="res://Scripts/PhysicsModifications.gd" id="4_0parn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h1kvh"]
-size = Vector2(200, 576)
+size = Vector2(200, 456)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nken3"]
+size = Vector2(20, 496)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vst0q"]
+size = Vector2(1024, 20)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6waks"]
+radius = 14.0
 
 [node name="GameContainer" type="Node2D"]
 
 [node name="Arena" type="Node2D" parent="."]
 
 [node name="Floor" type="TextureRect" parent="Arena"]
-offset_right = 1024.0
-offset_bottom = 576.0
-texture = ExtResource("1_r1bhp")
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 1027.0
+offset_bottom = 579.0
+texture = ExtResource("1_fb8xv")
 
 [node name="LeftWizardArea2D" type="Area2D" parent="Arena"]
+position = Vector2(0, 120)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/LeftWizardArea2D"]
-position = Vector2(100, 288)
+position = Vector2(100, 228)
 shape = SubResource("RectangleShape2D_h1kvh")
 
 [node name="TextureRect" type="TextureRect" parent="Arena/LeftWizardArea2D"]
+visible = false
 offset_right = 200.0
 offset_bottom = 576.0
 texture = ExtResource("1_r1bhp")
@@ -33,34 +48,75 @@ texture = ExtResource("1_r1bhp")
 position = Vector2(824, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/RightWizardArea2D"]
-position = Vector2(100, 288)
+position = Vector2(100, 348)
 shape = SubResource("RectangleShape2D_h1kvh")
 
 [node name="TextureRect" type="TextureRect" parent="Arena/RightWizardArea2D"]
+visible = false
 offset_right = 200.0
 offset_bottom = 576.0
 texture = ExtResource("1_r1bhp")
 
+[node name="Boundaries" type="Node2D" parent="Arena"]
+
+[node name="Left" type="StaticBody2D" parent="Arena/Boundaries"]
+position = Vector2(-20, 100)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Boundaries/Left"]
+position = Vector2(10, 248)
+shape = SubResource("RectangleShape2D_nken3")
+
+[node name="Right" type="StaticBody2D" parent="Arena/Boundaries"]
+position = Vector2(1024, 100)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Boundaries/Right"]
+position = Vector2(10, 248)
+shape = SubResource("RectangleShape2D_nken3")
+
+[node name="Top" type="StaticBody2D" parent="Arena/Boundaries"]
+position = Vector2(0, 100)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Boundaries/Top"]
+position = Vector2(512, 10)
+shape = SubResource("RectangleShape2D_vst0q")
+
+[node name="Bottom" type="StaticBody2D" parent="Arena/Boundaries"]
+position = Vector2(0, 576)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Boundaries/Bottom"]
+position = Vector2(512, 10)
+shape = SubResource("RectangleShape2D_vst0q")
+
 [node name="Ball" type="RigidBody2D" parent="."]
-position = Vector2(512.5, 288.5)
+position = Vector2(512.5, 320)
 gravity_scale = 0.0
+script = ExtResource("3_ak0jf")
 
 [node name="TextureRect" type="TextureRect" parent="Ball"]
-offset_left = -16.0
-offset_top = -16.0
-offset_right = 112.0
-offset_bottom = 112.0
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("1_r1bhp")
+offset_left = -47.0
+offset_top = -48.0
+offset_right = -15.0
+offset_bottom = -16.0
+scale = Vector2(3, 3)
+texture = ExtResource("3_ruo30")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
 scale = Vector2(1.6, 1.6)
 shape = SubResource("CircleShape2D_6waks")
 
+[node name="PhysicsModifications" type="Node" parent="Ball"]
+script = ExtResource("4_0parn")
+drag = 1
+
 [node name="Wizard1" parent="." node_paths=PackedStringArray("_platform", "_paddle") instance=ExtResource("2_4mqa4")]
-position = Vector2(100.5, 286.5)
+position = Vector2(100.5, 325)
 _platform = NodePath("../Arena/LeftWizardArea2D")
 _paddle = NodePath("../Paddle")
 
 [node name="Paddle" parent="." instance=ExtResource("3_lh8f8")]
-position = Vector2(150, 188.5)
+position = Vector2(150, 228.5)
+collision_mask = 3
