@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 
 const PROJECTILE_FIREBALL_EXPLOSION:PackedScene = preload("res://Scenes/Projectiles/ProjectileFireballExplosion.tscn")
-const SPEED = 300.0
+const SPEED = 450.0
 
 
 var angle:float = 0
@@ -17,6 +17,7 @@ func _ready():
 
 func _physics_process(delta):
 	velocity = (_velocity + $PhysicsModifications.on_physics_process(delta)) * delta
+	rotation = velocity.angle()
 	var collision:KinematicCollision2D = move_and_collide(velocity)
 	if(collision != null):
 		_explode()
@@ -25,7 +26,7 @@ func _physics_process(delta):
 		if(bounces < 0):
 			collision_layer = 0
 			collision_mask = 0
-			$TextureRect.hide()
+			$AnimatedSprite2D.hide()
 			_velocity = Vector2.ZERO
 		else:
 			_velocity = velocity.bounce(collision.get_normal()).normalized() * SPEED
