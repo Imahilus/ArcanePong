@@ -1,7 +1,6 @@
 extends CharacterBody2D
 
 
-const PROJECTILE_FIREBALL_EXPLOSION:PackedScene = preload("res://Scenes/Projectiles/ProjectileFireballExplosion.tscn")
 const SPEED = 450.0
 
 
@@ -13,6 +12,7 @@ var explosionPower = 400
 
 func _ready():
 	_velocity = Vector2.from_angle(angle) * SPEED
+	AudioPlayer.play_clip(AudioClips.SOUND.FIRE_PROJECTILE)
 
 
 func _physics_process(delta):
@@ -20,9 +20,10 @@ func _physics_process(delta):
 	rotation = velocity.angle()
 	var collision:KinematicCollision2D = move_and_collide(velocity)
 	if(collision != null):
-		_explode()
-		bounces -= 1
-		$GPUParticles2D.emitting = true
+		if(collision.get_collider().name != "Paddle"):
+			_explode()
+			bounces -= 1
+			$ExplosionFire.emitting = true
 		if(bounces < 0):
 			collision_layer = 0
 			collision_mask = 0
@@ -30,11 +31,12 @@ func _physics_process(delta):
 			_velocity = Vector2.ZERO
 		else:
 			_velocity = velocity.bounce(collision.get_normal()).normalized() * SPEED
-	if(bounces < 0 && $GPUParticles2D.emitting == false):
+	if(bounces < 0 && $ExplosionFire.emitting == false):
 		queue_free()
 
 
 func _explode():
+	AudioPlayer.play_clip(AudioClips.SOUND.FIRE_EXPLOSION)
 	var bodies:Array[Node2D] = $ExplosionRadius.get_overlapping_bodies()
 	for body in bodies:
 		if(body == self || body is StaticBody2D || body.name == "Paddle"):

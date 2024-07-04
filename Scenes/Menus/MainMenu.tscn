@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://1cmslxdi32si"]
+
+[ext_resource type="Script" path="res://Scenes/Menus/MainMenu.gd" id="1_wtglv"]
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_wtglv")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+custom_minimum_size = Vector2(1024, 576)
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="PlayButton" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Play Game"
+
+[node name="SettingsButton" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Settings"
+
+[node name="CreditsButton" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Credits"
+
+[node name="ExitButton" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Exit to Desktop"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]

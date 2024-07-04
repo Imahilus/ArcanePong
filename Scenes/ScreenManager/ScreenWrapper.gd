@@ -18,17 +18,25 @@ func _ready():
 func _process(_delta):
 	if(_stateToSwitchTo != _currentState):
 		_currentState = _stateToSwitchTo
-		if(_stateToSwitchTo == STATE.CLOSE):
-			process_mode = Node.PROCESS_MODE_DISABLED
+		match _stateToSwitchTo:
+			STATE.OPEN:
+				if(get_child_count() > 0 && get_child(0).has_method("on_open")):
+					get_child(0).on_open()
+			STATE.CLOSE:
+				process_mode = Node.PROCESS_MODE_DISABLED
+				hide()
 
 
 func open():
 	_stateToSwitchTo = STATE.OPEN
+	show()
 	process_mode = Node.PROCESS_MODE_INHERIT
 
 
 func close():
 	_stateToSwitchTo = STATE.CLOSE
+	if(get_child_count() > 0 && get_child(0).has_method("on_close")):
+		get_child(0).on_close()
 
 
 func get_current_state() -> STATE:

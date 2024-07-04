@@ -1,0 +1,66 @@
+[gd_scene load_steps=2 format=3 uid="uid://djh0bbnde8kdg"]
+
+[ext_resource type="Script" path="res://Scenes/Menus/WizardSelectMenu.gd" id="1_pl453"]
+
+[node name="WizardSelectMenu" type="Node2D"]
+script = ExtResource("1_pl453")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+custom_minimum_size = Vector2(1024, 576)
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Select 2 fighters (red for Player1, blue for Player2) to play a friend,
+Or select 1 fighter to fight a mystery opponent by yourself!"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(600, 400)
+layout_mode = 2
+columns = 2
+
+[node name="CentauriButton" type="Button" parent="CenterContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+text = "Centauri the Sleepy Star"
+
+[node name="EmiraButton" type="Button" parent="CenterContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+text = "Emira the Enigma"
+
+[node name="LaylaButton" type="Button" parent="CenterContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+text = "Layla of the Land"
+
+[node name="VenturiButton" type="Button" parent="CenterContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+toggle_mode = true
+text = "Vortex Venturi"
+
+[node name="PlayButton" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Play Arcane Pong"
+
+[node name="BackButton" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Back to Main Menu"
+
+[connection signal="toggled" from="CenterContainer/VBoxContainer/GridContainer/CentauriButton" to="." method="_on_wizard_select" binds= [1]]
+[connection signal="toggled" from="CenterContainer/VBoxContainer/GridContainer/EmiraButton" to="." method="_on_wizard_select" binds= [2]]
+[connection signal="toggled" from="CenterContainer/VBoxContainer/GridContainer/LaylaButton" to="." method="_on_wizard_select" binds= [3]]
+[connection signal="toggled" from="CenterContainer/VBoxContainer/GridContainer/VenturiButton" to="." method="_on_wizard_select" binds= [4]]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]

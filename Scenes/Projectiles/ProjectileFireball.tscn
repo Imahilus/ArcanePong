@@ -131,12 +131,12 @@ script = ExtResource("1_u4v3i")
 position = Vector2(-14, 0)
 sprite_frames = SubResource("SpriteFrames_f6y7m")
 autoplay = "default"
-frame_progress = 0.58045
+frame_progress = 0.19234
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_1ft0j")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="ExplosionFire" type="GPUParticles2D" parent="."]
 emitting = false
 amount = 250
 process_material = SubResource("ParticleProcessMaterial_7lwh8")
