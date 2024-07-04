@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bxm58e3bjolrp"]
+
+[ext_resource type="Script" path="res://Scenes/Projectiles/ProjectileAir.gd" id="1_cyywk"]
+[ext_resource type="Texture2D" uid="uid://brlps1b7y47en" path="res://icon.svg" id="2_3wcow"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1ft0j"]
+
+[node name="ProjectileAir" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_cyywk")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 190.0
+offset_bottom = 190.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_3wcow")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1ft0j")

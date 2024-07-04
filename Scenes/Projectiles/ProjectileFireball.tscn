@@ -1,0 +1,155 @@
+[gd_scene load_steps=23 format=3 uid="uid://b0bq51co1a73l"]
+
+[ext_resource type="Script" path="res://Scenes/Projectiles/ProjectileFireball.gd" id="1_u4v3i"]
+[ext_resource type="Texture2D" uid="uid://dbps8uuwxel8r" path="res://Resources/Sprites/fireball.png" id="2_eufoa"]
+[ext_resource type="Script" path="res://Scripts/PhysicsModifications.gd" id="3_7ryop"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3swc0"]
+atlas = ExtResource("2_eufoa")
+region = Rect2(0, 0, 44, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k3wo7"]
+atlas = ExtResource("2_eufoa")
+region = Rect2(44, 0, 44, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_suupw"]
+atlas = ExtResource("2_eufoa")
+region = Rect2(88, 0, 44, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qhxy1"]
+atlas = ExtResource("2_eufoa")
+region = Rect2(132, 0, 44, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jlq4h"]
+atlas = ExtResource("2_eufoa")
+region = Rect2(176, 0, 44, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q3hb3"]
+atlas = ExtResource("2_eufoa")
+region = Rect2(220, 0, 44, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3edju"]
+atlas = ExtResource("2_eufoa")
+region = Rect2(264, 0, 44, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dafxa"]
+atlas = ExtResource("2_eufoa")
+region = Rect2(308, 0, 44, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f6y7m"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3swc0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k3wo7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_suupw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qhxy1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jlq4h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q3hb3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3edju")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dafxa")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1ft0j"]
+radius = 8.0
+
+[sub_resource type="Curve" id="Curve_3rxv6"]
+_data = [Vector2(0, 1), 0.0, 1.4, 0, 0, Vector2(0.773333, 0.384615), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_mfe1p"]
+curve = SubResource("Curve_3rxv6")
+
+[sub_resource type="Gradient" id="Gradient_2vcc5"]
+offsets = PackedFloat32Array(0, 0.155738, 0.385246, 0.680328, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.967122, 0.760985, 0.440242, 1, 0.793399, 0.438701, 0, 1, 0.654902, 0.121569, 0.121569, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6oqk0"]
+gradient = SubResource("Gradient_2vcc5")
+
+[sub_resource type="Curve" id="Curve_qr3ot"]
+_data = [Vector2(0, 0), 0.0, 1.4, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_jy4ui"]
+_data = [Vector2(0, 0), 0.0, 1.4, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_na0qu"]
+curve_x = SubResource("Curve_qr3ot")
+curve_y = SubResource("Curve_jy4ui")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7lwh8"]
+lifetime_randomness = 0.15
+particle_flag_disable_z = true
+particle_flag_damping_as_friction = true
+angle_max = 360.0
+spread = 180.0
+initial_velocity_min = 150.0
+initial_velocity_max = 200.0
+directional_velocity_min = 0.0
+directional_velocity_max = 0.0
+directional_velocity_curve = SubResource("CurveXYZTexture_na0qu")
+orbit_velocity_min = 0.5
+orbit_velocity_max = 1.0
+radial_velocity_min = -100.0
+radial_velocity_max = 200.0
+gravity = Vector3(0, 0, 0)
+scale_min = 8.0
+scale_max = 14.0
+color = Color(0.971071, 0.663891, 1.15514e-06, 1)
+color_ramp = SubResource("GradientTexture1D_6oqk0")
+alpha_curve = SubResource("CurveTexture_mfe1p")
+hue_variation_max = 0.1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qweqn"]
+radius = 80.0
+
+[node name="ProjectileFireball" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_u4v3i")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-14, 0)
+sprite_frames = SubResource("SpriteFrames_f6y7m")
+autoplay = "default"
+frame_progress = 0.58045
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1ft0j")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 250
+process_material = SubResource("ParticleProcessMaterial_7lwh8")
+lifetime = 0.4
+one_shot = true
+preprocess = 0.1
+explosiveness = 0.65
+
+[node name="ExplosionRadius" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionRadius"]
+shape = SubResource("CircleShape2D_qweqn")
+
+[node name="PhysicsModifications" type="Node" parent="."]
+script = ExtResource("3_7ryop")
+drag = 2
