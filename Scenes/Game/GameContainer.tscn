@@ -1,5 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://lgyfy7jq760t"]
+[gd_scene load_steps=13 format=3 uid="uid://lgyfy7jq760t"]
 
+[ext_resource type="Script" path="res://Scenes/Game/GameContainer.gd" id="1_ey603"]
 [ext_resource type="Texture2D" uid="uid://bbtievkusxq2f" path="res://Resources/Sprites/Arena.png" id="1_fb8xv"]
 [ext_resource type="Texture2D" uid="uid://brlps1b7y47en" path="res://icon.svg" id="1_r1bhp"]
 [ext_resource type="PackedScene" uid="uid://qc1m1wloleov" path="res://Scenes/Game/Wizard.tscn" id="2_4mqa4"]
@@ -21,6 +22,7 @@ size = Vector2(1024, 20)
 radius = 14.0
 
 [node name="GameContainer" type="Node2D"]
+script = ExtResource("1_ey603")
 
 [node name="Arena" type="Node2D" parent="."]
 

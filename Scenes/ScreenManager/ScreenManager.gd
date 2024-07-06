@@ -5,10 +5,19 @@ class_name ScreenManager
 
 
 enum SCREEN { NONE, MAIN_MENU, SETTINGS, WIZARD_SELECT, GAME, CREDITS }
+static var _singleton:ScreenManager
 
 
 var currentScreen:SCREEN = SCREEN.NONE
-var screenToSwitchTo:SCREEN = SCREEN.GAME
+var screenToSwitchTo:SCREEN = SCREEN.MAIN_MENU
+
+
+static func switch_to_screen(screenToTransitionTo:SCREEN):
+	_singleton.screenToSwitchTo = screenToTransitionTo
+
+
+func _ready():
+	_singleton = self
 
 
 func _process(_delta):

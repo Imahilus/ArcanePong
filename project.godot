@@ -20,6 +20,10 @@ config/icon="res://icon.svg"
 window/size/viewport_width=1024
 window/size/viewport_height=576
 
+[filesystem]
+
+import/blender/enabled=false
+
 [input]
 
 Player1_Up={
