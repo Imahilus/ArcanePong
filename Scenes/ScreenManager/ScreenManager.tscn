@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://bl8ofasb3ho6x"]
+[gd_scene load_steps=8 format=3 uid="uid://bl8ofasb3ho6x"]
 
 [ext_resource type="Script" path="res://Scenes/ScreenManager/ScreenManager.gd" id="1_qq3gw"]
 [ext_resource type="PackedScene" uid="uid://dln114lakscgo" path="res://Scenes/Other/AudioPlayer.tscn" id="2_8x3kx"]
 [ext_resource type="Script" path="res://Scenes/ScreenManager/ScreenWrapper.gd" id="2_ejnrs"]
-[ext_resource type="PackedScene" uid="uid://lgyfy7jq760t" path="res://Scenes/Game/GameContainer.tscn" id="3_3dmr7"]
 [ext_resource type="PackedScene" uid="uid://1cmslxdi32si" path="res://Scenes/Menus/MainMenu.tscn" id="4_wthgp"]
 [ext_resource type="PackedScene" uid="uid://di8rhaqfkevaw" path="res://Scenes/Menus/SettingsMenu.tscn" id="5_rkc26"]
 [ext_resource type="PackedScene" uid="uid://djh0bbnde8kdg" path="res://Scenes/Menus/WizardSelectMenu.tscn" id="6_r22pi"]
@@ -35,8 +34,6 @@ script = ExtResource("2_ejnrs")
 [node name="GameWrapper" type="Node2D" parent="."]
 visible = false
 script = ExtResource("2_ejnrs")
-
-[node name="GameContainer" parent="GameWrapper" instance=ExtResource("3_3dmr7")]
 
 [node name="CreditsWrapper" type="Node2D" parent="."]
 visible = false

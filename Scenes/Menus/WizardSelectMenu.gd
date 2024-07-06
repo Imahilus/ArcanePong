@@ -13,7 +13,18 @@ var _player2Wizard:WIZARD = WIZARD.NONE
 
 
 func on_open():
-	#remove the selection from all 4 wizard buttons
+	$CenterContainer/VBoxContainer/GridContainer/CentauriButton.set_pressed_no_signal(false)
+	$CenterContainer/VBoxContainer/GridContainer/EmiraButton.set_pressed_no_signal(false)
+	$CenterContainer/VBoxContainer/GridContainer/LaylaButton.set_pressed_no_signal(false)
+	$CenterContainer/VBoxContainer/GridContainer/VenturiButton.set_pressed_no_signal(false)
+	$CenterContainer/VBoxContainer/GridContainer/CentauriButton.disabled = false
+	$CenterContainer/VBoxContainer/GridContainer/EmiraButton.disabled = false
+	$CenterContainer/VBoxContainer/GridContainer/LaylaButton.disabled = false
+	$CenterContainer/VBoxContainer/GridContainer/VenturiButton.disabled = false
+	_set_button_colour(WIZARD.CENTAURI, 0)
+	_set_button_colour(WIZARD.EMIRA, 0)
+	_set_button_colour(WIZARD.LAYLA, 0)
+	_set_button_colour(WIZARD.VENTURI, 0)
 	$CenterContainer/VBoxContainer/PlayButton.disabled = true
 	_player1Wizard = WIZARD.NONE
 	_player2Wizard = WIZARD.NONE
@@ -78,6 +89,7 @@ func _on_play_button_pressed():
 	newGame.add_wizard_for_player1(player1Wizard)
 	newGame.add_wizard_for_player2(player2Wizard)
 	ScreenManager._singleton.find_child("GameWrapper").add_child(newGame)
+	ScreenManager.switch_to_screen(ScreenManager.SCREEN.GAME)
 
 
 func _create_wizard(wizardToCreate:WIZARD):
@@ -96,7 +108,6 @@ func _set_button_colour(wizardSelected:WIZARD, playerNumber:int):
 		_:
 			colour = Color.WHITE
 	
-	var button:CanvasItem
 	match wizardSelected:
 		WIZARD.CENTAURI:
 			$CenterContainer/VBoxContainer/GridContainer/CentauriButton.self_modulate = colour
