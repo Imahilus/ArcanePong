@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b0bq51co1a73l"]
+[gd_scene load_steps=28 format=3 uid="uid://b0bq51co1a73l"]
 
 [ext_resource type="Script" path="res://Scenes/Projectiles/ProjectileFireball.gd" id="1_u4v3i"]
 [ext_resource type="Texture2D" uid="uid://dbps8uuwxel8r" path="res://Resources/Sprites/fireball.png" id="2_eufoa"]
@@ -71,6 +71,39 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_1ft0j"]
 radius = 8.0
 
+[sub_resource type="Gradient" id="Gradient_elwad"]
+offsets = PackedFloat32Array(0.25, 0.550802, 0.791444)
+colors = PackedColorArray(1, 1, 0, 1, 1, 0, 0, 1, 0.320616, 0.00126016, 0.666909, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_egagc"]
+gradient = SubResource("Gradient_elwad")
+
+[sub_resource type="Curve" id="Curve_jdlbt"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.263736), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_iiceq"]
+curve = SubResource("Curve_jdlbt")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vgqn8"]
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 8.0
+direction = Vector3(-1, 0, 0)
+spread = 110.0
+initial_velocity_min = 120.0
+initial_velocity_max = 240.0
+angular_velocity_min = -100.0
+angular_velocity_max = 100.0
+gravity = Vector3(0, 0, 0)
+scale_min = 5.0
+scale_max = 10.0
+scale_curve = SubResource("CurveTexture_iiceq")
+color_ramp = SubResource("GradientTexture1D_egagc")
+hue_variation_min = -0.1
+hue_variation_max = 0.1
+
 [sub_resource type="Curve" id="Curve_3rxv6"]
 _data = [Vector2(0, 1), 0.0, 1.4, 0, 0, Vector2(0.773333, 0.384615), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
@@ -137,6 +170,15 @@ frame_progress = 0.19234
 shape = SubResource("CircleShape2D_1ft0j")
 
 [node name="ExplosionFire" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 70
+process_material = SubResource("ParticleProcessMaterial_vgqn8")
+lifetime = 0.4
+one_shot = true
+preprocess = 0.1
+explosiveness = 0.71
+
+[node name="ExplosionFireOld" type="GPUParticles2D" parent="."]
 emitting = false
 amount = 250
 process_material = SubResource("ParticleProcessMaterial_7lwh8")
