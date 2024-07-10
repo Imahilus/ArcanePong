@@ -66,9 +66,9 @@ func _physics_process(delta):
 	else:
 		$Sprite.play("run")
 		if direction[0] < 0:
-			$Sprite.scale.x = -2
+			$Sprite.flip_h = true
 		elif direction[0] > 0:
-			$Sprite.scale.x = 2
+			$Sprite.flip_h = false
 	
 	move_and_slide()
 	#Restrict the wizard from leaving the platform rectangle
