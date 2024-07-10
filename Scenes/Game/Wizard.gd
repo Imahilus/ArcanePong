@@ -61,6 +61,15 @@ func _physics_process(delta):
 	else:
 		velocity = bumped
 	
+	if direction == Vector2.ZERO:
+		$Sprite.play("idle")
+	else:
+		$Sprite.play("run")
+		if direction[0] < 0:
+			$Sprite.flip_h = true
+		elif direction[0] > 0:
+			$Sprite.flip_h = false
+	
 	move_and_slide()
 	#Restrict the wizard from leaving the platform rectangle
 	position.x = clamp(position.x, _platform.position.x + $CollisionShape2D.shape.radius, _platform.position.x + _platform.get_node("CollisionShape2D").shape.size.x - $CollisionShape2D.shape.radius)
